@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebSocket Terminal</title>
+  <style>
+    #terminal {
+      width: 600px;
+      height: 400px;
+      border: 1px solid #000;
+      padding: 10px;
+      overflow: auto;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div id="terminal"></div>
+  <input type="text" id="input" autocomplete="off">
+  <button id="send">Send</button>
+
+  <script>
+    var terminal = document.getElementById('terminal');
+    var input = document.getElementById('input');
+    var sendButton = document.getElementById('send');
+
+    var ws = new WebSocket('ws://' + location.host + '/ws');
+
+    ws.onmessage = function(event) {
+      terminal.textContent += '\n' + event.data;
+      terminal.scrollTop = terminal.scrollHeight;
+    };
+
+    sendButton.onclick = function() {
+      ws.send(input.value);
+      input.value = '';
+    };
+  </script>
+</body>
+</html>

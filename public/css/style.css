@@ -1,0 +1,17 @@
+/* public/css/matrix.css */
+body, html {
+  height: 100%;
+  margin: 0;
+  background-color: black;
+  color: #0f0;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.terminal {
+  white-space: pre;
+  overflow: auto;
+  background-color: black;
+  padding: 20px;
+  height: 90%;
+  border: 1px solid #0f0;
+}

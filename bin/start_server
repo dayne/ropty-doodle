@@ -1,0 +1,23 @@
+#!/bin/bash
+
+which bundle
+
+# exit if any command has non-zero exit code
+set -e 
+
+cd "$(dirname "$0")/.."
+
+if ! gem list bundler -i > /dev/null 2>&1; then
+  echo "Bundler not installed ... installing"
+  gem install bundler
+fi
+
+# Check if required gems are installed
+bundle check || bundle install
+
+PORT=${ROPTY_PORT:-31337}
+
+# Start the server using Rack's default server, making sure to specify the environment if necessary
+echo "Starting ropty server on $PORT"
+echo "bundle exec rackup -p $PORT"
+bundle exec rackup -s thin -p $PORT 
