@@ -100,13 +100,14 @@ module Ropty
             while @running
               output = master.readpartial(512)
               puts Rainbow("@pty_thread @ws_clients.size=#{@ws_clients.size} read: #{output}").purple
-              @mutex.synchronize do
-                if @ws_clients.empty?
+              if @ws_clients.empty?
                   puts Rainbow("No clients connected").yellow
                   self.stop_pty
                   break
+              else
+                @mutex.synchronize do
+                  @ws_clients.each { |client| client.send(output) }
                 end
-                @ws_clients.each { |client| client.send(output) }
               end
             end
           rescue EOFError => e
