@@ -7,9 +7,6 @@
 # `Ropty::WebSocketController`, on the other hand, is 
 # responsible for handling WebSocket connections.
 
-require 'thin'
-require 'faye/websocket'
-Faye::WebSocket.load_adapter('thin')
 require_relative 'config'
 require_relative 'websocket_controller'
 require 'rainbow'
@@ -27,7 +24,6 @@ module Ropty
         # WebSocket request handling
         ws = WebSocketController.new(env)
         ws.rack_response
-
       else
         # Non-WebSocket request handling
         @app.call(env)

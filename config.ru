@@ -1,10 +1,12 @@
 # config.ru
-require 'thin'
 require 'rack'
+require 'thin'
+require 'faye/websocket'
+Faye::WebSocket.load_adapter('thin')
 require_relative 'lib/ropty'
 
 # Use Rack::Static to serve static files from the public directory
-use Rack::Static, urls: ["/css", "/js", "/images"], root: "public"
+use Rack::Static, urls: ["/css", "/js", "/images", "/matrix-effect"], root: "public"
 use Rack::Logger
 
 map '/ws/' do

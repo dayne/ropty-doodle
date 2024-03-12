@@ -1,17 +1,50 @@
 /* public/css/matrix.css */
 body, html {
   height: 100%;
+  width: 100%;
   margin: 0;
+  padding: 0;
   background-color: black;
   color: #0f0;
   font-family: 'Courier New', Courier, monospace;
+  overflow: hidden;
 }
 
 .terminal {
-  white-space: pre;
-  overflow: auto;
-  background-color: black;
-  padding: 20px;
-  height: 90%;
-  border: 1px solid #0f0;
+    position: relative;
+    z-index: 2; /* Ensure content is above the matrix effect */
+    top: 20%;
+    width: 80%; 
+    height: 70%;
+    background-color: rgba(0,0,0,0.7);
+    margin: auto;
+    display: flex;
+    color: #0f0;
+
+    white-space: pre-wrap;
+    font-family: monospace;
+    white-space: pre;
+    overflow: auto;
+    border: 1px solid #0f0;
+}
+
+body, html {
+}
+
+#matrix-effect-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.matrix-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* Keep the canvas below the content */
 }

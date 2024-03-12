@@ -15,11 +15,22 @@ Security Considerations
 - **Read-Only:** The setup described is inherently read-only because it does not process any input from the client to the pty session. Still, ensure that this is strictly enforced.
 - **Process Isolation:** Run the terminal process with minimal privileges to reduce security risks. Consider using containers or virtual machines for additional isolation.
 
+## Usage
+
+```
+bin/start_server
+connect to http://localhost:42080
+mosquitto_pub -h localhost -t /ropty -m "greetings web client"
+```
+
+
 ## Setup
 
 ```
 # have ruby + bundler available
 git clone
+cd 
+git submodule update --init
 bundle
 ```
 

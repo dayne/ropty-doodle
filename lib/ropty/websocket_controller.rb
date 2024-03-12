@@ -1,12 +1,9 @@
 # lib/ropty/websocket_controller.rb
 require 'rainbow'
-require 'faye/websocket'
 require 'pty'
 require 'thread'
 require 'open3'
 require 'pry'
-require 'thin'
-Faye::WebSocket.load_adapter('thin')
 
 module Ropty
   class WebSocketController
@@ -20,7 +17,7 @@ module Ropty
       attr_accessor :pty_thread, :ws_clients, :running, :mutex
 
       def init_class_variables
-        puts Rainbow("Initializing class variables").orange
+        puts Rainbow("Initializing class variables").green
         @ws_clients = []
         @pty_thread = nil
         @running = false
@@ -37,15 +34,15 @@ module Ropty
 
     def rack_response
       rr = @ws.rack_response
-      puts Rainbow(rr.inspect).yellow
+      puts Rainbow(rr.inspect).orange
       rr
     end
 
     def setup(env)
       puts Rainbow("Ropty::WebSocketController Initializing ...").green
-      env['HTTP_UPGRADE'] ||= 'websocket'
+      #env['HTTP_UPGRADE'] ||= 'WebSocket'
       #env['HTTP_CONNECTION'] ||= 'Upgrade'
-      ws = Faye::WebSocket.new(env, nil, {ping: KEEPALIVE_TIME})
+      ws = Faye::WebSocket.new(env) #, nil, {ping: KEEPALIVE_TIME})
       self.class.ws_clients << ws
 
       self.class.start_pty unless self.class.running
@@ -69,9 +66,10 @@ module Ropty
       ws.on :close do |event|
         puts Rainbow("WS: Websocket closed.").red
         self.class.ws_clients.delete(ws)
-        @running = false
+        if self.class.ws_clients.empty? 
+          self.class.stop_pty
+        end
       end
-
       puts Rainbow("WS: WebSocketController initialized.").green
       ws
     rescue StandardError => e
@@ -92,14 +90,15 @@ module Ropty
 
       begin 
         master, slave = PTY.open
-        spawn('mosquitto_sub', '-h', 'localhost', '-t', 'hi', in: slave, out: slave)
+        spawn('mosquitto_sub', '-h', 'localhost', '-t', '/ropty', in: slave, out: slave)
         #slave.close
         #spawn('bash', in: slave, out: slave)
+
         @pty_thread = Thread.new do
           begin
             while @running
               output = master.readpartial(512)
-              puts Rainbow("@pty_thread @ws_clients.size=#{@ws_clients.size} read: #{output}").purple
+              #puts Rainbow("@pty_thread @ws_clients.size=#{@ws_clients.size} read: #{output}").purple
               if @ws_clients.empty?
                   puts Rainbow("No clients connected").yellow
                   self.stop_pty
@@ -127,6 +126,7 @@ module Ropty
     end
 
     def self.stop_pty
+      puts Rainbow("stop_pty(): PTY stop called").purple
       @running = false
       #self.stop_pty
       @mutex.synchronize do

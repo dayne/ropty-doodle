@@ -2,22 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ropty - Read-Only PTY</title>
-    <link rel="stylesheet" href="css/style.css">
-     <style>
-        #terminal {
-        width: 80%;
-        height: 80%;
-        border: 1px solid #000;
-        padding: 10px;
-        overflow: auto;
-        white-space: pre-wrap;
-        font-family: monospace;
+    <!-- <link rel="stylesheet" href="css/style.css"> -->
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: black;
+        }
+
+        #matrix-effect-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+        }
+
+        #matrix-effect {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Ensure canvas is in the background */
+        }
+
+        .terminal {
+            white-space: pre-wrap;    
+            font-family: monospace;    
+            white-space: pre;    
+            border: 1px solid #0f0;    
+            color: #0f0;
+            position: absolute;
+            top: 10%; /* Start the content 10% from the top */
+            left: 10%;
+            right: 10%;
+            bottom: 10%;
+            z-index: 2; /* Ensure content is above the matrix effect */
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            overflow: auto; /* In case the content overflows */
         }
     </style>
 </head>
 <body>
-    <div id="terminal" class="terminal">connecting to ropty...</div>
-    <script src="/js/app.js"></script>
+  <div id="matrix-effect-container">
+    <canvas id="matrix-effect"></canvas>
+    <div id="terminal" class="terminal">
+      connecting to ropty...
+    </div>
+  </div>
+
+  <script defer type="module" src="matrix-effect/assets/js/app.js"></script>
+  <script src="/js/app.js"></script>
 </body>
 </html>

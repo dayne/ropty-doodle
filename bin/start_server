@@ -25,4 +25,4 @@ bundle exec gem list | grep thin
 # Start the server using Rack's default server, making sure to specify the environment if necessary
 echo "Starting ropty server on $PORT"
 echo "bundle exec rackup -p $PORT"
-rackup -s thin -p $PORT 
+rackup -s thin -E production -p $PORT 
