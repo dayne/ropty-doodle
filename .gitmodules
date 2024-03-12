@@ -1,0 +1,3 @@
+[submodule "public/matrix-effect"]
+	path = public/matrix-effect
+	url = https://github.com/sumitKcs/matrix-effect
