@@ -17,7 +17,7 @@ fi
 # Check if required gems are installed
 bundle check || bundle install
 
-PORT=${ROPTY_PORT:-31337}
+PORT=${ROPTY_PORT:-42080}
 
 echo "checking for thin"
 bundle exec gem list | grep thin
