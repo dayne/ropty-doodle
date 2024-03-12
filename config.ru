@@ -1,6 +1,6 @@
 # config.ru
-require 'rack'
 require 'thin'
+require 'rack'
 require_relative 'lib/ropty'
 
 # Use Rack::Static to serve static files from the public directory
