@@ -1,0 +1,17 @@
+#!/usr/bin/bash
+
+MQTT_HOST=localhost
+MQTT_TOPIC='/ropty'
+
+if ! command -v mosquitto_pub > /dev/null; then
+  echo "Fatal: missing mosquitto_pub"
+  exit 1
+fi
+
+# Read from STDIN, one line at a time
+while IFS= read -r line; do
+  # Echo the line with "#" prefixed
+  echo "# $line"
+  mosquitto_pub -h "$MQTT_HOST" -t "$MQTT_TOPIC" -m "$line"
+done
+
