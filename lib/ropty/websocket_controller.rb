@@ -55,7 +55,7 @@ module Ropty
 
       ws.on :open do |event|
         puts Rainbow("WS: Websocket opened.").green
-        ws.send("Hello! Welcome to Ropty!")
+        ws.send("\nHello! Welcome to Ropty!\n")
       end
 
       ws.on :message do |event|
