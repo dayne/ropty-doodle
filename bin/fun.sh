@@ -19,8 +19,8 @@ if ! command -v figlet > /dev/null; then
 fi
 
 function pub() {
-  echo $1
-  echo $1 | mosquitto_pub -h "$MQTT_HOST" -t "$MQTT_TOPIC" -l
+  echo "$1"
+  echo "$1" | mosquitto_pub -h "$MQTT_HOST" -t "$MQTT_TOPIC" -l
 }
 
 while(true) do
