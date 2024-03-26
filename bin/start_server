@@ -9,6 +9,11 @@ fi
 # exit if any command has non-zero exit code
 set -e 
 
+if [ ! -f public/matrix-effect/README.md ]; then
+  echo "Missing matrix-effect ... doing git submodule update"
+  git submodule update --init
+fi
+
 if ! gem list bundler -i > /dev/null 2>&1; then
   echo "Bundler not installed ... installing"
   gem install bundler

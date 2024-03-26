@@ -6,7 +6,7 @@ Not relevant to anyone but [dayne](https://github.com/dayne) ... for now.
 
 ## Why?
 
-... personal reasons. 
+... personal reasons... fun times
 
 ## Security Considerations
 
@@ -23,15 +23,15 @@ connect to http://localhost:42080
 mosquitto_pub -h localhost -t /ropty -m "greetings web client"
 ```
 
-
 ## Setup
 
 ```
 # have ruby + bundler available
-git clone
-cd 
-git submodule update --init
-bundle
+git clone https://github.com/dayne/ropty-doodle 
+cd ropty-doodle
+git submodule update --init   # get the matrix effect
+bundle                        # get the ruby deps
+./bin/start
 ```
 
 ## `tree`
